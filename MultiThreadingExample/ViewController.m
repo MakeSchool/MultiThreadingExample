@@ -19,6 +19,8 @@
 
 @end
 
+static const NSInteger kTotalOperations = 1000;
+
 @implementation ViewController
 
 #pragma mark - Init
@@ -39,10 +41,11 @@
     [super viewDidAppear:animated];
     
     self.displayedStringLabel.text = self.strings[self.currentStringIndex];
+    self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%ld", self.completedDownloads, kTotalOperations];
     
     self.dispatchGroup = dispatch_group_create();
     
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < kTotalOperations; i++) {
         dispatch_group_async(self.dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self downloadBlock];
         });
@@ -68,7 +71,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         self.completedDownloads++;
-        self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%d", self.completedDownloads, 20];
+        self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%ld", self.completedDownloads, kTotalOperations];
     });
 }
 
