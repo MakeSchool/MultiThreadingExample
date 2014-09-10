@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *displayedStringLabel;
 @property (assign, nonatomic) NSInteger currentStringIndex;
 @property (assign, nonatomic) NSInteger completedDownloads;
+@property (strong, nonatomic) dispatch_group_t dispatchGroup;
 
 @end
 
@@ -39,23 +40,17 @@
     
     self.displayedStringLabel.text = self.strings[self.currentStringIndex];
     
+    self.dispatchGroup = dispatch_group_create();
+    
     for (int i = 0; i < 20; i++) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_group_async(self.dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self downloadBlock];
         });
     }
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-}
-
-#pragma mark - Memory Management
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    dispatch_group_notify(self.dispatchGroup, dispatch_get_main_queue(), ^{
+        self.downloadStatusLabel.text = @"Completed";
+    });
 }
 
 #pragma mark - Button Callbacks
@@ -70,13 +65,10 @@
 
 - (void)downloadBlock {
     sleep(1);
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         self.completedDownloads++;
-        if (self.completedDownloads < 20) {
-            self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%d", self.completedDownloads, 20];
-        } else {
-            self.downloadStatusLabel.text = @"Completed";
-        }
+        self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%d", self.completedDownloads, 20];
     });
 }
 
