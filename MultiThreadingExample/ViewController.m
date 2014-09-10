@@ -68,6 +68,8 @@
         sleep(1);
         self.downloadStatusLabel.text = [NSString stringWithFormat:@"%d/%d", i+1, 20];
     }
+    
+    self.downloadStatusLabel.text = @"Completed";
 }
 
 @end
