@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Nu-HM-bnd">
+                                <rect key="frame" x="275" y="236" width="50" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Random Text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfD-nn-9gQ">
+                                <rect key="frame" x="249" y="502" width="102" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mCC-7n-o5K">
+                                <rect key="frame" x="262" y="464" width="77" height="30"/>
+                                <state key="normal" title="Next String">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showRandomTextPressed:" destination="vXZ-lx-hvc" eventType="touchDown" id="zm3-eU-oZs"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJH-yW-5M2">
+                                <rect key="frame" x="283" y="265" width="35" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="cfD-nn-9gQ" secondAttribute="bottom" constant="77" id="0Zu-4s-g5x"/>
+                            <constraint firstItem="cfD-nn-9gQ" firstAttribute="top" secondItem="mCC-7n-o5K" secondAttribute="bottom" constant="8" id="AWg-a8-83k"/>
+                            <constraint firstAttribute="centerX" secondItem="cfD-nn-9gQ" secondAttribute="centerX" id="AZq-Oq-2pi"/>
+                            <constraint firstAttribute="centerX" secondItem="jJH-yW-5M2" secondAttribute="centerX" id="PZ2-YB-N33"/>
+                            <constraint firstAttribute="centerX" secondItem="4Nu-HM-bnd" secondAttribute="centerX" id="Zyg-gH-KGs"/>
+                            <constraint firstAttribute="centerX" secondItem="mCC-7n-o5K" secondAttribute="centerX" constant="-0.5" id="f5w-Bs-deS"/>
+                            <constraint firstItem="jJH-yW-5M2" firstAttribute="top" secondItem="4Nu-HM-bnd" secondAttribute="bottom" constant="8" id="gwH-7g-BCb"/>
+                            <constraint firstItem="4Nu-HM-bnd" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="216" id="ir8-kh-qLR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="displayedStringLabel" destination="cfD-nn-9gQ" id="jCM-P9-XBl"/>
+                        <outlet property="downloadStatusLabel" destination="jJH-yW-5M2" id="iT7-3L-XT1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
