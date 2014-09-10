@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -28,6 +29,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJH-yW-5M2">
+                                <rect key="frame" x="283" y="265" width="35" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mCC-7n-o5K">
                                 <rect key="frame" x="262" y="464" width="77" height="30"/>
                                 <state key="normal" title="Next String">
@@ -37,21 +44,51 @@
                                     <action selector="showRandomTextPressed:" destination="vXZ-lx-hvc" eventType="touchDown" id="zm3-eU-oZs"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJH-yW-5M2">
-                                <rect key="frame" x="283" y="265" width="35" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZl-su-ahG">
+                                <rect key="frame" x="200" y="0.0" width="201" height="82"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Xj-8c-dnL">
+                                        <rect key="frame" x="47" y="26" width="33" height="30"/>
+                                        <state key="normal" title="Start">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="startButtonPressed:" destination="vXZ-lx-hvc" eventType="touchDown" id="Qgc-gk-GGV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aBZ-dP-X8o">
+                                        <rect key="frame" x="106" y="26" width="48" height="30"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelButtonPressed:" destination="vXZ-lx-hvc" eventType="touchDown" id="6sq-6W-Y9x"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="201" id="54C-QA-tn4"/>
+                                    <constraint firstAttribute="bottom" secondItem="0Xj-8c-dnL" secondAttribute="bottom" constant="26" id="Gif-2n-MSN"/>
+                                    <constraint firstAttribute="height" constant="82" id="OqI-iF-VRY"/>
+                                    <constraint firstItem="0Xj-8c-dnL" firstAttribute="top" secondItem="eZl-su-ahG" secondAttribute="top" constant="26" id="W3Y-xr-eLJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="aBZ-dP-X8o" secondAttribute="bottom" constant="26" id="fkl-la-nec"/>
+                                    <constraint firstAttribute="trailing" secondItem="aBZ-dP-X8o" secondAttribute="trailing" constant="47" id="oD8-yJ-D6h"/>
+                                    <constraint firstItem="0Xj-8c-dnL" firstAttribute="leading" secondItem="eZl-su-ahG" secondAttribute="leading" constant="47" id="rUP-Qv-QdR"/>
+                                    <constraint firstItem="aBZ-dP-X8o" firstAttribute="top" secondItem="eZl-su-ahG" secondAttribute="top" constant="26" id="sgm-fC-Clp"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="cfD-nn-9gQ" secondAttribute="bottom" constant="77" id="0Zu-4s-g5x"/>
                             <constraint firstItem="cfD-nn-9gQ" firstAttribute="top" secondItem="mCC-7n-o5K" secondAttribute="bottom" constant="8" id="AWg-a8-83k"/>
                             <constraint firstAttribute="centerX" secondItem="cfD-nn-9gQ" secondAttribute="centerX" id="AZq-Oq-2pi"/>
+                            <constraint firstItem="eZl-su-ahG" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="BkZ-kp-5xJ"/>
                             <constraint firstAttribute="centerX" secondItem="jJH-yW-5M2" secondAttribute="centerX" id="PZ2-YB-N33"/>
                             <constraint firstAttribute="centerX" secondItem="4Nu-HM-bnd" secondAttribute="centerX" id="Zyg-gH-KGs"/>
                             <constraint firstAttribute="centerX" secondItem="mCC-7n-o5K" secondAttribute="centerX" constant="-0.5" id="f5w-Bs-deS"/>
+                            <constraint firstAttribute="centerX" secondItem="eZl-su-ahG" secondAttribute="centerX" constant="-0.5" id="g1J-8o-Ooz"/>
                             <constraint firstItem="jJH-yW-5M2" firstAttribute="top" secondItem="4Nu-HM-bnd" secondAttribute="bottom" constant="8" id="gwH-7g-BCb"/>
                             <constraint firstItem="4Nu-HM-bnd" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="216" id="ir8-kh-qLR"/>
                         </constraints>

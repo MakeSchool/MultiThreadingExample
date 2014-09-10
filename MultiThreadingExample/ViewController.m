@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *displayedStringLabel;
 @property (assign, nonatomic) NSInteger currentStringIndex;
 @property (assign, nonatomic) NSInteger completedDownloads;
-@property (strong, nonatomic) dispatch_group_t dispatchGroup;
+@property (strong, nonatomic) NSOperationQueue *operationQueue;
 
 @end
 
@@ -41,22 +41,56 @@ static const NSInteger kTotalOperations = 1000;
     [super viewDidAppear:animated];
     
     self.displayedStringLabel.text = self.strings[self.currentStringIndex];
-    self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%ld", self.completedDownloads, kTotalOperations];
-    
-    self.dispatchGroup = dispatch_group_create();
-    
-    for (int i = 0; i < kTotalOperations; i++) {
-        dispatch_group_async(self.dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self downloadBlock];
-        });
-    }
-    
-    dispatch_group_notify(self.dispatchGroup, dispatch_get_main_queue(), ^{
-        self.downloadStatusLabel.text = @"Completed";
-    });
 }
 
 #pragma mark - Button Callbacks
+
+- (IBAction)startButtonPressed:(id)sender {
+    if (self.operationQueue.operationCount > 0) {
+        return;
+    }
+    
+    self.completedDownloads = 0;
+    self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%ld", self.completedDownloads, kTotalOperations];
+    
+    self.operationQueue = [NSOperationQueue new];
+    self.operationQueue.maxConcurrentOperationCount = 50;
+    
+    NSOperation *completionBlock = [NSBlockOperation blockOperationWithBlock:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.downloadStatusLabel.text = @"Completed";
+        });
+    }];
+    
+    for (int i = 0; i < kTotalOperations; i++) {
+        NSOperation *downloadOperation = [NSBlockOperation blockOperationWithBlock:^{
+            [self downloadBlock];
+        }];
+        
+        __weak NSOperation *weakDownloadOperation = downloadOperation;
+        
+        [downloadOperation setCompletionBlock:^{
+            if (weakDownloadOperation.cancelled) {
+                return;
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.completedDownloads++;
+                self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%ld", self.completedDownloads, kTotalOperations];
+            });
+        }];
+        
+        [completionBlock addDependency:downloadOperation];
+        
+        [self.operationQueue addOperation:downloadOperation];
+    }
+    
+    [self.operationQueue addOperation:completionBlock];
+}
+
+- (IBAction)cancelButtonPressed:(id)sender {
+    [self.operationQueue cancelAllOperations];
+}
 
 - (IBAction)showRandomTextPressed:(id)sender {
     self.currentStringIndex++;
@@ -68,11 +102,6 @@ static const NSInteger kTotalOperations = 1000;
 
 - (void)downloadBlock {
     sleep(1);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.completedDownloads++;
-        self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%ld", self.completedDownloads, kTotalOperations];
-    });
 }
 
 @end
