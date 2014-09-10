@@ -38,7 +38,9 @@
     
     self.displayedStringLabel.text = self.strings[self.currentStringIndex];
     
-    [self downloadData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self downloadData];
+    });
 }
 
 - (void)viewDidLoad {
@@ -66,8 +68,14 @@
 - (void)downloadData {
     for (int i = 0; i < 20; i++) {
         sleep(1);
-        self.downloadStatusLabel.text = [NSString stringWithFormat:@"%d/%d", i+1, 20];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.downloadStatusLabel.text = [NSString stringWithFormat:@"%d/%d", i+1, 20];
+        });
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.downloadStatusLabel.text = @"Completed";
+    });
 }
 
 @end
