@@ -54,13 +54,15 @@ static const NSInteger kTotalOperations = 1000;
     self.downloadStatusLabel.text = [NSString stringWithFormat:@"%ld/%ld", self.completedDownloads, kTotalOperations];
     
     self.operationQueue = [NSOperationQueue new];
-    self.operationQueue.maxConcurrentOperationCount = 50;
+    self.operationQueue.maxConcurrentOperationCount = 1000;
     
     NSOperation *completionBlock = [NSBlockOperation blockOperationWithBlock:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             self.downloadStatusLabel.text = @"Completed";
         });
     }];
+    
+    NSMutableArray *downloadOperations = [NSMutableArray array];
     
     for (int i = 0; i < kTotalOperations; i++) {
         NSOperation *downloadOperation = [NSBlockOperation blockOperationWithBlock:^{
@@ -81,11 +83,12 @@ static const NSInteger kTotalOperations = 1000;
         }];
         
         [completionBlock addDependency:downloadOperation];
-        
-        [self.operationQueue addOperation:downloadOperation];
+        [downloadOperations addObject:downloadOperation];
     }
     
-    [self.operationQueue addOperation:completionBlock];
+    [downloadOperations addObject:completionBlock];
+    
+    [self.operationQueue addOperations:downloadOperations waitUntilFinished:NO];
 }
 
 - (IBAction)cancelButtonPressed:(id)sender {
